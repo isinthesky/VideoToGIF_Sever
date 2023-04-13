@@ -1,0 +1,12 @@
+# node.js
+#
+node_modules/
+.eslintignore
+
+# env
+#
+*.env
+
+# Logs
+#
+*.log
