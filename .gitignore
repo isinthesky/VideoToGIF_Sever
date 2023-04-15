@@ -1,6 +1,7 @@
 # node.js
 #
 node_modules/
+.DS_Store
 .eslintignore
 
 # env
@@ -10,3 +11,8 @@ node_modules/
 # Logs
 #
 *.log
+
+##mockup
+#
+*.MOV
+*.bmp
