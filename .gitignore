@@ -16,3 +16,5 @@ node_modules/
 #
 *.MOV
 *.bmp
+*.mp4
+*.gif
