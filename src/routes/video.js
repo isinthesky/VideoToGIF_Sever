@@ -7,6 +7,7 @@ const { getSrcBmp, makeGif, removeSrcBmp } = require("../lib/makeGif");
 
 const TEMP_FILEDIR = "../../temp/";
 const GIF_FILEDIR = "../../public/images/";
+const GIF_DIR_CLIENT = "/images/";
 
 router.put("/", upload.single("file"), function (req, res, next) {
   try {
@@ -21,6 +22,7 @@ router.put("/", upload.single("file"), function (req, res, next) {
     const speed = Number(options.Speed);
     const temp = path.join(__dirname, TEMP_FILEDIR);
     const output = path.join(__dirname, GIF_FILEDIR);
+    const delay = (10 / speed) * (8 / fps);
 
     (async () => {
       try {
@@ -38,10 +40,19 @@ router.put("/", upload.single("file"), function (req, res, next) {
 
           if (result) {
             const srcList = getSrcBmp(temp, filename);
-            const gifImage = await makeGif(temp, srcList, width, height, output, filename);
+            const gifSize = await makeGif(temp, srcList, width, height, delay, output, filename);
 
-            if (gifImage) {
-              res.status(200).json({ ok: true, filename: filename });
+            if (gifSize) {
+              res.status(200).json({
+                ok: true,
+                gif: {
+                  url: GIF_DIR_CLIENT + filename + ".gif",
+                  filename: filename + ".gif",
+                  size: gifSize,
+                  width: width,
+                  height: height,
+                },
+              });
               removeSrcBmp(temp, filename);
               return true;
             }

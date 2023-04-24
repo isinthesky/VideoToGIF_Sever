@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, UPLOAD_FILEDIR));
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + ".MOV");
+    cb(null, file.originalname);
   },
 });
 
