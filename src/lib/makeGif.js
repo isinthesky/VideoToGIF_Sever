@@ -17,7 +17,7 @@ exports.removeSrcBmp = (srcPath, filePreset) => {
   });
 };
 
-exports.makeGif = async (srcPath, files, width, height, outPath, filename) => {
+exports.makeGif = async (srcPath, files, width, height, delay, outPath, filename) => {
   let p = 0;
   let buf = [];
 
@@ -37,15 +37,16 @@ exports.makeGif = async (srcPath, files, width, height, outPath, filename) => {
         height,
         data.slice(BMP_HEADER_SIZE + PALETTE_SIZE).reverse(),
         palette,
-        10,
+        delay,
       );
     }
     p = end(buf, p);
 
     await fs.promises.writeFile(outPath + filename + ".gif", new Uint8Array(buf));
-    return true;
+    return p;
   } catch (error) {
     console.error("makeGif error:", error);
+    return false;
   }
 };
 
@@ -137,6 +138,8 @@ function addFrame(buf, p, w, h, indexed_pixels, local_palette, delay) {
   num_colors = 1 << min_code_size; // Now we can easily get it back.
 
   let disposal = 2;
+
+  console.log("delay", delay);
 
   if (disposal !== 0 || delay !== 0) {
     // - Graphics Control Extension
