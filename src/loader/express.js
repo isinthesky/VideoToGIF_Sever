@@ -6,7 +6,7 @@ const logger = require("morgan");
 const cors = require("cors");
 
 const expressLoader = (app) => {
-  app.set("views", path.join(__dirname, "views"));
+  app.set("views", path.join(__dirname, "../../views"));
   app.set("view engine", "ejs");
 
   app.use(
@@ -19,9 +19,8 @@ const expressLoader = (app) => {
   app.use(logger(app.get("env") === "development" ? "dev" : "combined"));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
-  app.use(fileUpload());
   app.use(cookieParser());
-  app.use(express.static(path.join(__dirname, "public")));
+  app.use(express.static(path.join(__dirname, "../../public")));
 };
 
 module.exports = expressLoader;

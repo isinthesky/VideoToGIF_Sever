@@ -7,8 +7,7 @@ exports.extractBmp = async (videopath, width, height, fps, outPath, outPreset, h
       "-i",
       videopath,
       "-vf",
-      //`scale=${width}:${height} ${vflip ? ", vflip" : ""}, ${hflip ? ", hflip" : ""}`,
-      `scale=${width}:${height}`,
+      `scale=${width}:${height} ${vflip ? ", vflip" : ""} ${!hflip ? ", hflip" : ""}`,
       "-r",
       fps,
       "-pix_fmt",
@@ -27,20 +26,16 @@ exports.extractBmp = async (videopath, width, height, fps, outPath, outPreset, h
         });
         ffmpeg.on("close", (code) => {
           resolve({ ok: true, code: code });
+          return true;
         });
       },
       (reject) => {
         console.error("extractBmp error:", reject);
+        return false;
       },
     );
   } catch (error) {
     console.error("extractBmp error:", error);
-    let errorCode = error.code;
-    let errorMessage = error.message;
-    if (errorCode == "auth/weak-password") {
-      return res.status(500).json({ error: errorMessage });
-    } else {
-      return res.status(500).json({ error: errorMessage });
-    }
+    return false;
   }
 };

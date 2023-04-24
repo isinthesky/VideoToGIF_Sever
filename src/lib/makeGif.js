@@ -11,6 +11,12 @@ exports.getSrcBmp = (srcPath, filePreset) => {
   });
 };
 
+exports.removeSrcBmp = (srcPath, filePreset) => {
+  fs.readdirSync(srcPath).filter((file) => {
+    file.indexOf(filePreset) >= 0 ? fs.rm(srcPath + file, () => {}) : null;
+  });
+};
+
 exports.makeGif = async (srcPath, files, width, height, outPath, filename) => {
   let p = 0;
   let buf = [];
@@ -37,6 +43,7 @@ exports.makeGif = async (srcPath, files, width, height, outPath, filename) => {
     p = end(buf, p);
 
     await fs.promises.writeFile(outPath + filename + ".gif", new Uint8Array(buf));
+    return true;
   } catch (error) {
     console.error("makeGif error:", error);
   }

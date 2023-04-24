@@ -5,8 +5,8 @@ const errorHandlerLoader = require("./src/loader/errorHandler");
 
 const app = express();
 
-routerLoader(app);
 expressLoader(app);
+routerLoader(app);
 errorHandlerLoader(app);
 
 module.exports = app;
