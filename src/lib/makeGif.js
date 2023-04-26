@@ -139,8 +139,6 @@ function addFrame(buf, p, w, h, indexed_pixels, local_palette, delay) {
 
   let disposal = 2;
 
-  console.log("delay", delay);
-
   if (disposal !== 0 || delay !== 0) {
     // - Graphics Control Extension
     buf[p++] = 0x21;

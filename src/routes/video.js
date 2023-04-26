@@ -8,6 +8,8 @@ const { getSrcBmp, makeGif, removeSrcBmp } = require("../lib/makeGif");
 const TEMP_FILEDIR = "../../temp/";
 const GIF_FILEDIR = "../../public/images/";
 const GIF_DIR_CLIENT = "/images/";
+const DELAY_SPEED_WEIGHTS = 5;
+const DELAY_FPS_WEIGHTS = 19;
 
 router.put("/", upload.single("file"), function (req, res, next) {
   try {
@@ -22,7 +24,7 @@ router.put("/", upload.single("file"), function (req, res, next) {
     const speed = Number(options.Speed);
     const temp = path.join(__dirname, TEMP_FILEDIR);
     const output = path.join(__dirname, GIF_FILEDIR);
-    const delay = (10 / speed) * (8 / fps);
+    const delay = (DELAY_SPEED_WEIGHTS / speed) * (DELAY_FPS_WEIGHTS / fps);
 
     (async () => {
       try {
