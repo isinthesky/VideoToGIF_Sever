@@ -13,7 +13,7 @@ exports.extractBmp = async (videopath, width, height, fps, outPath, outPreset, h
       "-pix_fmt",
       "bgr8", //gif bitmap format
       "-y",
-      `${outPath}${outPreset}%03d.bmp`,
+      `${outPath}${outPreset}%04d.bmp`,
     ]);
 
     return new Promise(
